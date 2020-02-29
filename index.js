@@ -17,4 +17,12 @@ app.get('*', (req, res)=>{
     res.redirect('/');
 })
 
-app.listen(process.env.PORT||3000);
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, (err)=>{
+    if(err){
+        console.log("error == ", err);
+    }else{
+        console.log("server is running on port", PORT);
+    }
+});
