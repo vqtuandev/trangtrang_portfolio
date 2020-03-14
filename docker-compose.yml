@@ -17,7 +17,6 @@ services:
       - "8080:8080"
     networks:
       - backend
-      - ether_backend_network
     volumes:
       # So that Traefik can listen to the Docker events
       - /var/run/docker.sock:/var/run/docker.sock
