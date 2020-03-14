@@ -1,0 +1,45 @@
+version: '3.5'
+
+services:
+  reverse-proxy:
+    # The official v2 Traefik docker image
+    image: traefik:v2.1
+    container_name: reverse-proxy
+    restart: unless-stopped
+    # Enables the web UI and tells Traefik to listen to docker
+    command: --api.insecure=true --providers.docker
+    ports:
+      # The HTTP port
+      - "80:80"
+      # The HTTPS port
+      - "443:443"
+      # The Web UI (enabled by --api.insecure=true)
+      - "8080:8080"
+    networks:
+      - backend
+      - ether_backend_network
+    volumes:
+      # So that Traefik can listen to the Docker events
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /home/adminroot/traefik/traefik.toml:/etc/traefik/traefik.toml
+      - /home/adminroot/traefik/traefik.config.toml:/etc/traefik/traefik.config.toml
+      - /home/adminroot/traefik/certs:/certs
+  trangtrang_pofolio:
+    container_name: trangtrang_portfolio_container
+    image: trangtrang
+    build: .
+    networks:
+      - backend
+    environment:
+      - "traefik.enable=true"
+      - "traefik.docker.network=backend"
+      - "traefik.http.routers.trangtrang_pofolio_http.rule=Host(`trangtrang.ga`)"
+      - "traefik.http.routers.trangtrang_pofolio_http.entrypoints=http"
+      - "traefik.http.routers.trangtrang_pofolio_http.middlewares=redirect@file"
+      - "traefik.http.routers.trangtrang_pofolio_https.rule=Host(`trangtrang.ga`)"
+      - "traefik.http.routers.trangtrang_pofolio_https.entrypoints=https"
+      - "traefik.http.routers.trangtrang_pofolio_https.tls=true"
+      - "traefik.port=3020"
+networks:
+  backend:
+    external: true

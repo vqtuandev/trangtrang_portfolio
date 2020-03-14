@@ -1,0 +1,48 @@
+#[http.routers.my-api]
+  #rule = "Host(`bsignerapi.luvapay.com`)"
+  #service = "api@internal"
+  #entryPoints = ["traefik"]
+  #middlewares = ["auth"]
+
+#[http.middlewares.auth.basicAuth]
+  #users = [
+    #"luva:$apr1$qz7J1SLz$/14.zqg7W6mNzdv0leQM8.",
+  #]
+
+#[http.routers]
+  #[http.routers.bsigner-http]
+    #entryPoints = ["http"]
+    #rule = "Host(`bsignerapi.luvapay.com`)"
+    #service = "bsigner"
+    #middlewares = ["redirect"]
+
+  #[http.routers.bsigner-https]
+    #entryPoints = ["https"]
+    #rule = "Host(`bsignerapi.luvapay.com`)"
+    #service = "bsigner"
+    #[http.routers.bsigner-https.tls]
+
+[http.middlewares]
+    [http.middlewares.redirect.redirectScheme]
+      scheme = "https"
+
+#[http.services]
+    #[http.services.bsigner]
+      #[http.services.bsigner.loadBalancer]
+       #passHostHeader = true
+
+        #[[http.services.bsigner.loadBalancer.servers]]
+           #This is where your dev app lives.
+           #url = "http://172.18.0.5:3000"
+
+[tls]
+  [[tls.certificates]]
+    certFile = "/certs/trangtrang.ga.crt"
+    keyFile = "/certs/trangtrang.ga.key"
+    #stores = ["default"]
+
+[tls.stores]
+  [tls.stores.default]
+    [tls.stores.default.defaultCertificate]
+      certFile = "/certs/trangtrang.ga.crt"
+      keyFile  = "/certs/trangtrang.ga.key"
