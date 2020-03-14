@@ -29,15 +29,15 @@ services:
     build: .
     networks:
       - backend
-    environment:
+    labels:
       - "traefik.enable=true"
       - "traefik.docker.network=backend"
       - "traefik.http.routers.trangtrang_pofolio_http.rule=Host(`trangtrang.ga`)"
       - "traefik.http.routers.trangtrang_pofolio_http.entrypoints=http"
       - "traefik.http.routers.trangtrang_pofolio_http.middlewares=redirect@file"
-#      - "traefik.http.routers.trangtrang_pofolio_https.rule=Host(`trangtrang.ga`)"
-#      - "traefik.http.routers.trangtrang_pofolio_https.entrypoints=https"
-#      - "traefik.http.routers.trangtrang_pofolio_https.tls=true"
+      - "traefik.http.routers.trangtrang_pofolio_https.rule=Host(`trangtrang.ga`)"
+      - "traefik.http.routers.trangtrang_pofolio_https.entrypoints=https"
+      - "traefik.http.routers.trangtrang_pofolio_https.tls=true"
 networks:
   backend:
     external: true
