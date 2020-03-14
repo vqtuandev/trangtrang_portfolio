@@ -20,8 +20,8 @@ services:
     volumes:
       # So that Traefik can listen to the Docker events
       - /var/run/docker.sock:/var/run/docker.sock
-      - traefik.toml:/etc/traefik/traefik.toml
-      - traefik.config.toml:/etc/traefik/traefik.config.toml
+      - ./traefik.toml:/etc/traefik/traefik.toml
+      - ./traefik.config.toml:/etc/traefik/traefik.config.toml
       - traefik/certs:/certs
   trangtrang_pofolio:
     container_name: trangtrang_portfolio_container
