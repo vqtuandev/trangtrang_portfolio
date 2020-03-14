@@ -35,10 +35,9 @@ services:
       - "traefik.http.routers.trangtrang_pofolio_http.rule=Host(`trangtrang.ga`)"
       - "traefik.http.routers.trangtrang_pofolio_http.entrypoints=http"
       - "traefik.http.routers.trangtrang_pofolio_http.middlewares=redirect@file"
-      - "traefik.http.routers.trangtrang_pofolio_https.rule=Host(`trangtrang.ga`)"
-      - "traefik.http.routers.trangtrang_pofolio_https.entrypoints=https"
-      - "traefik.http.routers.trangtrang_pofolio_https.tls=true"
-      - "traefik.port=3020"
+#      - "traefik.http.routers.trangtrang_pofolio_https.rule=Host(`trangtrang.ga`)"
+#      - "traefik.http.routers.trangtrang_pofolio_https.entrypoints=https"
+#      - "traefik.http.routers.trangtrang_pofolio_https.tls=true"
 networks:
   backend:
     external: true
