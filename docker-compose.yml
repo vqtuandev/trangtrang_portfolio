@@ -22,7 +22,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - $PWD/traefik.toml:/etc/traefik/traefik.toml
       - $PWD/traefik.config.toml:/etc/traefik/traefik.config.toml
-      - $PWD/traefik/certs:/certs
+      - $PWD/certs:/certs
   trangtrang_pofolio:
     container_name: trangtrang_portfolio_container
     image: trangtrang
